@@ -38,7 +38,7 @@ export const Signup = () => {
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
-    background: "linear-gradient(to right, #141e30, #243b55)",
+    background: `url('src/Image/sign-up.jpg') no-repeat center center/cover`,
   };
 
   const cardStyle = {
@@ -62,6 +62,14 @@ export const Signup = () => {
     outline: "none",
   };
 
+  // Custom Placeholder Color
+  const placeholderStyle = `
+    ::placeholder {
+      color: rgba(255, 255, 255, 0.7); /* Light white */
+      opacity: 1;
+    }
+  `;
+
   const buttonStyle = {
     width: "100%",
     padding: "12px",
@@ -75,6 +83,7 @@ export const Signup = () => {
 
   return (
     <div style={containerStyle}>
+      <style>{placeholderStyle}</style> {/* Add placeholder color */}
       <div style={cardStyle}>
         <h2 style={{ color: "#fff", marginBottom: "15px" }}>📝 Signup</h2>
 

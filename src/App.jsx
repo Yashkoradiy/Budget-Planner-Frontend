@@ -14,9 +14,11 @@ import { Signup } from "./Components/common/Signup";
 import { AdminSidebar } from "./Components/admin/AdminSidebar";
 import { AdminSignup } from "./Components/common/AdminSignup";
 import ExpenseForm from "./Components/layouts/ExpenceForm";
-import BudgetSubmissionDiagram from "./Components/Expence/BudgetSubmissionDiagram";
+import PieChart from "./Components/Expence/Piechart";
+
 
 import axios from "axios";
+
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -35,7 +37,7 @@ function App() {
 
           <Route
             path="/budget-diagram"
-            element={<BudgetSubmissionDiagram />}
+            element={<PieChart />}
           ></Route>
 
           <Route path="/Adminlogin" element={<Login />}></Route>

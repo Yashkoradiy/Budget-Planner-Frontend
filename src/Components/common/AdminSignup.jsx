@@ -13,7 +13,7 @@ export const AdminSignup = () => {
     setLoading(true);
     setError("");
 
-    data.role_id = "67c158fd996242a915da42ba";
+    data.role_id = "67c55cb94afdb81cecd9eceb";
     data.status = data.status === "true" ? true : false;
 
     try {
@@ -38,7 +38,7 @@ export const AdminSignup = () => {
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
-    background: "linear-gradient(to right, #141e30, #243b55)",
+    background: `url('src/Image/Homepage-1.jpg') no-repeat center center/cover`,
   };
 
   const cardStyle = {
@@ -62,6 +62,14 @@ export const AdminSignup = () => {
     outline: "none",
   };
 
+  // Custom Placeholder Color
+  const placeholderStyle = `
+    ::placeholder {
+      color: rgba(255, 255, 255, 0.7); /* Light white */
+      opacity: 1;
+    }
+  `;
+
   const buttonStyle = {
     width: "100%",
     padding: "12px",
@@ -75,6 +83,7 @@ export const AdminSignup = () => {
 
   return (
     <div style={containerStyle}>
+      <style>{placeholderStyle}</style> {/* Add placeholder color */}
       <div style={cardStyle}>
         <h2 style={{ color: "#fff", marginBottom: "15px" }}>📝 Signup</h2>
 

@@ -41,13 +41,13 @@ export const Login = () => {
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
-    background: "linear-gradient(to right, #1e3c72, #2a5298)",
+    background: `url('src/Image/login.jpg') no-repeat center center/cover`,
   };
 
   const cardStyle = {
     width: "350px",
     padding: "20px",
-    background: "rgba(255, 255, 255, 0.2)",
+    background: "rgba(255, 255, 255, 0.2)", // Semi-transparent background
     backdropFilter: "blur(10px)",
     borderRadius: "10px",
     boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)",
@@ -79,7 +79,7 @@ export const Login = () => {
   return (
     <div style={containerStyle}>
       <div style={cardStyle}>
-        <h2 style={{ color: "#fff", marginBottom: "15px" }}>🔒 Login</h2>
+        <h2 style={{ color: "red", marginBottom: "15px" }}>🔒 Login</h2>
 
         {error && <p style={{ color: "red" }}>{error}</p>}
 
