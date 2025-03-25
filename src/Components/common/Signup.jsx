@@ -2,6 +2,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Signup = () => {
   const { register, handleSubmit } = useForm();
@@ -14,20 +16,23 @@ export const Signup = () => {
     setError("");
 
     data.role_id = "67c55cb94afdb81cecd9eceb";
-    data.status = data.status === "true" ? true : false;
+    data.status = data.status === "true";
 
     try {
       const res = await axios.post("/user", data);
       console.log("Signup Response:", res.data);
 
       if (res.status === 201) {
-        alert("Signup successful!");
-        navigate("/login");
+        toast.success("🎉 Signup successful! Redirecting...", {
+          position: "top-center",
+          autoClose: 3000, // 3 seconds
+        });
+        setTimeout(() => navigate("/login"), 3000); // Redirect after toast
       } else {
-        setError("Signup failed. Please try again.");
+        toast.error("❌ Signup failed. Please try again.");
       }
     } catch (err) {
-      setError("Error signing up. Please check your details.");
+      toast.error("⚠️ Error signing up. Please check your details.");
     } finally {
       setLoading(false);
     }
@@ -62,78 +67,63 @@ export const Signup = () => {
     outline: "none",
   };
 
-  // Custom Placeholder Color
-  const placeholderStyle = `
-    ::placeholder {
-      color: rgba(255, 255, 255, 0.7); /* Light white */
-      opacity: 1;
-    }
-  `;
-
   const buttonStyle = {
     width: "100%",
     padding: "12px",
-    background: "#ff7e5f",
+    background: loading ? "#ccc" : "#ff7e5f",
     border: "none",
     color: "white",
     borderRadius: "5px",
-    cursor: "pointer",
+    cursor: loading ? "not-allowed" : "pointer",
+    opacity: loading ? 0.7 : 1,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     transition: "0.3s",
+  };
+
+  const spinnerStyle = {
+    width: "18px",
+    height: "18px",
+    border: "2px solid white",
+    borderTop: "2px solid transparent",
+    borderRadius: "50%",
+    animation: "spin 0.8s linear infinite",
   };
 
   return (
     <div style={containerStyle}>
-      <style>{placeholderStyle}</style> {/* Add placeholder color */}
+      {/* Toast Notifications */}
+      <ToastContainer />
+
+      <style>
+        {`
+          ::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+            opacity: 1;
+          }
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}
+      </style>
+
       <div style={cardStyle}>
         <h2 style={{ color: "#fff", marginBottom: "15px" }}>📝 Signup</h2>
 
         {error && <p style={{ color: "red" }}>{error}</p>}
 
         <form onSubmit={handleSubmit(submitHandler)}>
-          <input
-            type="text"
-            placeholder="First Name"
-            {...register("firstName")}
-            style={inputStyle}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Last Name"
-            {...register("lastName")}
-            style={inputStyle}
-            required
-          />
-          <input
-            type="number"
-            placeholder="Age"
-            {...register("age")}
-            style={inputStyle}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Status (true/false)"
-            {...register("status")}
-            style={inputStyle}
-            required
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            {...register("email")}
-            style={inputStyle}
-            required
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            {...register("password")}
-            style={inputStyle}
-            required
-          />
+          <input type="text" placeholder="First Name" {...register("firstName")} style={inputStyle} required />
+          <input type="text" placeholder="Last Name" {...register("lastName")} style={inputStyle} required />
+          <input type="number" placeholder="Age" {...register("age")} style={inputStyle} required />
+          <input type="text" placeholder="Status (true/false)" {...register("status")} style={inputStyle} required />
+          <input type="email" placeholder="Email" {...register("email")} style={inputStyle} required />
+          <input type="password" placeholder="Password" {...register("password")} style={inputStyle} required />
+
           <button type="submit" style={buttonStyle} disabled={loading}>
-            {loading ? "Signing up..." : "Signup"}
+            {loading ? <div style={spinnerStyle}></div> : "Signup"}
           </button>
         </form>
       </div>

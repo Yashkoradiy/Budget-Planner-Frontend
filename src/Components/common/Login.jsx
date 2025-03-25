@@ -2,16 +2,16 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Login = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const submitHandler = async (data) => {
     setLoading(true);
-    setError("");
 
     try {
       const res = await axios.post("/user/login", data);
@@ -23,14 +23,23 @@ export const Login = () => {
         localStorage.setItem("id", res.data.user._id);
         localStorage.setItem("role", res.data.user.role.name);
 
-        if (res.data.user.role.name === "User") {
-          navigate("/user");
-        } else if (res.data.user.role.name === "Admin") {
-          navigate("/admin");
-        }
+        toast.success("✅ Login successful! Redirecting...", {
+          position: "top-center",
+          autoClose: 3000,
+        });
+
+        setTimeout(() => {
+          if (res.data.user.role.name === "User") {
+            navigate("/user");
+          } else if (res.data.user.role.name === "Admin") {
+            navigate("/admin");
+          }
+        }, 3000);
       }
     } catch (err) {
-      setError("Invalid email or password. Please try again.");
+      toast.error("❌ Invalid email or password. Please try again.", {
+        position: "top-center",
+      });
     } finally {
       setLoading(false);
     }
@@ -47,7 +56,7 @@ export const Login = () => {
   const cardStyle = {
     width: "350px",
     padding: "20px",
-    background: "rgba(255, 255, 255, 0.2)", // Semi-transparent background
+    background: "rgba(255, 255, 255, 0.2)",
     backdropFilter: "blur(10px)",
     borderRadius: "10px",
     boxShadow: "0px 10px 30px rgba(0, 0, 0, 0.2)",
@@ -78,10 +87,19 @@ export const Login = () => {
 
   return (
     <div style={containerStyle}>
+      {/* Toast Notifications */}
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="light"
+      />
+
       <div style={cardStyle}>
         <h2 style={{ color: "red", marginBottom: "15px" }}>🔒 Login</h2>
-
-        {error && <p style={{ color: "red" }}>{error}</p>}
 
         <form onSubmit={handleSubmit(submitHandler)}>
           <input
