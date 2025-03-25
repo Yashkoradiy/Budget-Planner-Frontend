@@ -15,6 +15,7 @@ import { AdminSidebar } from "./Components/admin/AdminSidebar";
 import { AdminSignup } from "./Components/common/AdminSignup";
 import ExpenseForm from "./Components/layouts/ExpenceForm";
 import PieChart from "./Components/Expence/Piechart";
+import Salary from "./Components/Expence/Salary";
 
 
 import axios from "axios";
@@ -39,6 +40,8 @@ function App() {
             path="/budget-diagram"
             element={<PieChart />}
           ></Route>
+
+          <Route path="/widgets" element={<Salary />}></Route>
 
           <Route path="/Adminlogin" element={<Login />}></Route>
           <Route path="/Adminsignup" element={<AdminSignup />}></Route>

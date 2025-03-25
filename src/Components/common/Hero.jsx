@@ -118,10 +118,7 @@ const HeroPage = () => {
   </ul>
 </nav>
 
-        <div style={styles.searchBar}>
-          <input type="text" placeholder="Search..." style={styles.searchInput} />
-          <button style={styles.searchButton}>Search</button>
-        </div>
+       
       </header>
 
       {/* Hero Section */}

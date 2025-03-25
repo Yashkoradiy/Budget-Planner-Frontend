@@ -43,7 +43,7 @@ export const UserSidebar = () => {
             </li>
             <li className="nav-item">
               <Link to="/widgets" className="nav-link text-white">
-                <i className="bi bi-box-seam-fill me-2" /> Widgets
+                <i className="bi bi-box-seam-fill me-2" /> Salary
               </Link>
             </li>
           </ul>
