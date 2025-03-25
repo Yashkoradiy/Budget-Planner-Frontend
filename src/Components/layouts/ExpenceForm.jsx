@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ExpenceForm = () => {
   const { register, handleSubmit, reset } = useForm();
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState("");
 
   const onSubmit = async (formData) => {
     setLoading(true);
-    setMessage(""); // Clear previous messages
     console.log("Form Data:", formData);
 
     try {
@@ -17,14 +17,21 @@ const ExpenceForm = () => {
       console.log("Response:", response.data);
 
       if (response.status === 201) {
-        setMessage("Budget added successfully!");
+        toast.success("✅ Budget added successfully!", {
+          position: "top-center",
+          autoClose: 3000,
+        });
         reset(); // Clear the form after successful submission
       } else {
-        setMessage("Failed to add budget. Please try again.");
+        toast.error("❌ Failed to add budget. Please try again.", {
+          position: "top-center",
+        });
       }
     } catch (error) {
       console.error("Error:", error);
-      setMessage("Error adding budget: " + (error.response?.data?.detail || "Unknown error"));
+      toast.error("❌ Error adding budget: " + (error.response?.data?.detail || "Unknown error"), {
+        position: "top-center",
+      });
     } finally {
       setLoading(false);
     }
@@ -32,8 +39,18 @@ const ExpenceForm = () => {
 
   return (
     <div style={styles.container}>
+      {/* Toast Notification Container */}
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        theme="light"
+      />
+
       <h2 style={styles.title}>Add Budget</h2>
-      {message && <p style={styles.message}>{message}</p>}
       <form onSubmit={handleSubmit(onSubmit)} style={styles.form}>
         <label style={styles.label}>Amount:</label>
         <input type="number" {...register("amount", { required: true })} style={styles.input} />
@@ -95,11 +112,6 @@ const styles = {
     border: "none",
     borderRadius: "5px",
     cursor: "pointer",
-  },
-  message: {
-    fontSize: "14px",
-    color: "green",
-    marginBottom: "10px",
   },
 };
 
