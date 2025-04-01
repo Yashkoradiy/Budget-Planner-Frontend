@@ -9,7 +9,11 @@ export const Login = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [forgotPasswordClicked, setForgotPasswordClicked] = useState(false);
+  const [email, setEmail] = useState("");
+  const [forgotLoading, setForgotLoading] = useState(false);
 
+  // Login Function
   const submitHandler = async (data) => {
     setLoading(true);
 
@@ -45,6 +49,26 @@ export const Login = () => {
     }
   };
 
+  // Forgot Password Function
+  const forgotPasswordHandler = async () => {
+    if (!email) {
+      toast.error("❌ Please enter your email!", { position: "top-center" });
+      return;
+    }
+
+    setForgotLoading(true);
+    try {
+      const res = await axios.post(`/forgotpassword?email=${email}`);
+      console.log(res.data);
+      toast.success("📩 Reset link sent! Check your email.");
+    } catch (err) {
+      toast.error("❌ Error sending reset link!", { position: "top-center" });
+    } finally {
+      setForgotLoading(false);
+    }
+  };
+
+  // Styles
   const containerStyle = {
     display: "flex",
     justifyContent: "center",
@@ -55,7 +79,7 @@ export const Login = () => {
 
   const cardStyle = {
     width: "350px",
-    padding: "20px",
+    padding: "25px",
     background: "rgba(255, 255, 255, 0.2)",
     backdropFilter: "blur(10px)",
     borderRadius: "10px",
@@ -85,18 +109,19 @@ export const Login = () => {
     transition: "0.3s",
   };
 
+  const forgotButtonStyle = {
+    background: "none",
+    color: "#ff7e5f",
+    border: "none",
+    cursor: "pointer",
+    textDecoration: "underline",
+    marginTop: "10px",
+  };
+
   return (
     <div style={containerStyle}>
       {/* Toast Notifications */}
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        closeOnClick
-        pauseOnHover
-        draggable
-        theme="light"
-      />
+      <ToastContainer position="top-center" autoClose={3000} />
 
       <div style={cardStyle}>
         <h2 style={{ color: "red", marginBottom: "15px" }}>🔒 Login</h2>
@@ -120,6 +145,33 @@ export const Login = () => {
             {loading ? "Logging in..." : "Login"}
           </button>
         </form>
+
+        {/* Forgot Password */}
+        <button
+          style={forgotButtonStyle}
+          onClick={() => setForgotPasswordClicked(!forgotPasswordClicked)}
+        >
+          Forgot Password?
+        </button>
+
+        {forgotPasswordClicked && (
+          <div>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={inputStyle}
+            />
+            <button
+              style={buttonStyle}
+              onClick={forgotPasswordHandler}
+              disabled={forgotLoading}
+            >
+              {forgotLoading ? "Sending..." : "Send Reset Link"}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

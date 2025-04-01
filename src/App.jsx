@@ -16,6 +16,9 @@ import { AdminSignup } from "./Components/common/AdminSignup";
 import ExpenseForm from "./Components/layouts/ExpenceForm";
 import PieChart from "./Components/Expence/Piechart";
 import Salary from "./Components/Expence/Salary";
+import { ResetPassword } from "./Components/common/ResetPassword";
+
+
 
 
 import axios from "axios";
@@ -32,6 +35,7 @@ function App() {
           <Route path="/" element={<Hero />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
+          <Route path="/reset-password:token" element={<ResetPassword/>}></Route>
           <Route path="/user" element={<UserSidebar />}>
             <Route path="" element={<ExpenseForm />}></Route>
           </Route>
