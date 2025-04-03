@@ -3,8 +3,9 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UserSidebar } from "./UserSidebar";
 
-const ExpenceForm = () => {
+const ExpenseForm = () => {
   const { register, handleSubmit, reset } = useForm();
   const [loading, setLoading] = useState(false);
 
@@ -39,35 +40,34 @@ const ExpenceForm = () => {
 
   return (
     <div style={styles.container}>
-      {/* Toast Notification Container */}
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        closeOnClick
-        pauseOnHover
-        draggable
-        theme="light"
-      />
+      {/* Sidebar */}
+      <div style={styles.sidebar}>
+        <UserSidebar />
+      </div>
 
-      <h2 style={styles.title}>Add Budget</h2>
-      <form onSubmit={handleSubmit(onSubmit)} style={styles.form}>
-        <label style={styles.label}>Amount:</label>
-        <input type="number" {...register("amount", { required: true })} style={styles.input} />
+      {/* Main Content */}
+      <div style={styles.mainContent}>
+        <ToastContainer position="top-center" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover draggable theme="light" />
 
-        <label style={styles.label}>Description:</label>
-        <input type="text" {...register("description", { required: true })} style={styles.input} />
+        <h2 style={styles.title}>Add Budget</h2>
+        <form onSubmit={handleSubmit(onSubmit)} style={styles.form}>
+          <label style={styles.label}>Amount:</label>
+          <input type="number" {...register("amount", { required: true })} style={styles.input} />
 
-        <label style={styles.label}>Category:</label>
-        <input type="text" {...register("category_id", { required: true })} style={styles.input} />
+          <label style={styles.label}>Description:</label>
+          <input type="text" {...register("description", { required: true })} style={styles.input} />
 
-        <label style={styles.label}>Sub-Category:</label>
-        <input type="text" {...register("sub_category_id", { required: true })} style={styles.input} />
+          <label style={styles.label}>Category:</label>
+          <input type="text" {...register("category_id", { required: true })} style={styles.input} />
 
-        <button type="submit" style={styles.button} disabled={loading}>
-          {loading ? "Adding..." : "Add Budget"}
-        </button>
-      </form>
+          <label style={styles.label}>Sub-Category:</label>
+          <input type="text" {...register("sub_category_id", { required: true })} style={styles.input} />
+
+          <button type="submit" style={styles.button} disabled={loading}>
+            {loading ? "Adding..." : "Add Budget"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
@@ -75,20 +75,36 @@ const ExpenceForm = () => {
 // Inline CSS styles
 const styles = {
   container: {
-    maxWidth: "400px",
-    margin: "auto",
+    display: "flex",
+    height: "100vh",
+  },
+  sidebar: {
+    width: "250px",
+    backgroundColor: "#1a202c",
     padding: "20px",
-    border: "1px solid #ccc",
-    borderRadius: "8px",
-    boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-    backgroundColor: "#f9f9f9",
-    textAlign: "center",
+    color: "white",
+  },
+  mainContent: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-start", // Align content to the top
+    paddingTop: "40px",
   },
   title: {
     fontSize: "24px",
     marginBottom: "15px",
   },
   form: {
+    maxWidth: "400px",
+    width: "100%",
+    padding: "20px",
+    border: "1px solid #ccc",
+    borderRadius: "8px",
+    boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+    backgroundColor: "#f9f9f9",
+    textAlign: "center",
     display: "flex",
     flexDirection: "column",
   },
@@ -115,4 +131,4 @@ const styles = {
   },
 };
 
-export default ExpenceForm;
+export default ExpenseForm;

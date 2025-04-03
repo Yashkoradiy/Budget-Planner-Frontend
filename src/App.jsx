@@ -35,17 +35,17 @@ function App() {
           <Route path="/" element={<Hero />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
-          <Route path="/reset-password:token" element={<ResetPassword/>}></Route>
-          <Route path="/user" element={<UserSidebar />}>
-            <Route path="" element={<ExpenseForm />}></Route>
-          </Route>
+          <Route path="/resetpassword/:token" element={<ResetPassword/>}></Route>
+          <Route path="/user" element={<UserSidebar />}></Route>
+
+          <Route path="/budget-form" element={<ExpenseForm />}></Route>
 
           <Route
             path="/budget-diagram"
             element={<PieChart />}
           ></Route>
 
-          <Route path="/widgets" element={<Salary />}></Route>
+          <Route path="/salary-form" element={<Salary />}></Route>
 
           <Route path="/Adminlogin" element={<Login />}></Route>
           <Route path="/Adminsignup" element={<AdminSignup />}></Route>

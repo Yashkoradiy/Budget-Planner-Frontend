@@ -50,7 +50,7 @@ export const UserSidebar = () => {
   return (
     <div>
       {/* Navbar */}
-      <UserNavbar />
+      
 
       {/* Sidebar */}
       <aside style={styles.sidebar}>
@@ -84,7 +84,7 @@ export const UserSidebar = () => {
             </li>
             <li>
               <Link
-                to="/widgets"
+                to="/salary-form"
                 style={styles.navItem}
                 onMouseEnter={(e) => Object.assign(e.target.style, styles.navItemHover)}
                 onMouseLeave={(e) => Object.assign(e.target.style, styles.navItem)}
@@ -98,7 +98,7 @@ export const UserSidebar = () => {
 
       {/* Main Content */}
       <main style={styles.mainContent}>
-        <ExpenceForm />
+        
       </main>
     </div>
   );

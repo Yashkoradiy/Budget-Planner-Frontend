@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UserSidebar } from "../layouts/UserSidebar";
 
 export const ResetPassword = () => {
   const { register, handleSubmit } = useForm();
@@ -15,7 +16,7 @@ export const ResetPassword = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:8000/reset-password", {
+      const res = await axios.post("http://localhost:8000/resetpassword", {
         password: data.password,
         token: token,
       });
@@ -38,7 +39,7 @@ export const ResetPassword = () => {
     justifyContent: "center",
     alignItems: "center",
     height: "100vh",
-    background: `url('src/Image/pass.jpg') no-repeat center center/cover`,
+    background: "url('/src/img/pass.jpg') no-repeat center center/cover",
   };
 
   const cardStyle = {
@@ -76,6 +77,7 @@ export const ResetPassword = () => {
 
   return (
     <div style={containerStyle}>
+      
       <ToastContainer position="top-center" autoClose={3000} />
       
       <div style={cardStyle}>

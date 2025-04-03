@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { UserSidebar } from "/src/Components/layouts/UserSidebar";
 
 const Salary = () => {
   const [formData, setFormData] = useState({
@@ -50,47 +51,30 @@ const Salary = () => {
 
   return (
     <div style={styles.container}>
-      {/* Toast Notification Container */}
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        closeOnClick
-        pauseOnHover
-        draggable
-        theme="light"
-      />
+      {/* Sidebar */}
+      <div style={styles.sidebar}>
+        <UserSidebar />
+      </div>
 
-      <h3 style={{ textAlign: "center" }}>Salary Form</h3>
-      <form onSubmit={handleSubmit}>
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Amount:</label>
-          <input
-            type="number"
-            name="amount"
-            value={formData.amount}
-            onChange={handleChange}
-            style={styles.input}
-            required
-          />
-        </div>
+      {/* Main Content */}
+      <div style={styles.mainContent}>
+        <ToastContainer position="top-center" autoClose={3000} hideProgressBar={false} closeOnClick pauseOnHover draggable theme="light" />
 
-        <div style={styles.inputGroup}>
-          <label style={styles.label}>Date:</label>
-          <input
-            type="date"
-            name="date"
-            value={formData.date}
-            onChange={handleChange}
-            style={styles.input}
-            required
-          />
-        </div>
+        <h3 style={styles.title}>Salary Form</h3>
+        <form onSubmit={handleSubmit} style={styles.form}>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Amount:</label>
+            <input type="number" name="amount" value={formData.amount} onChange={handleChange} style={styles.input} required />
+          </div>
 
-        <button type="submit" style={styles.button}>
-          Submit
-        </button>
-      </form>
+          <div style={styles.inputGroup}>
+            <label style={styles.label}>Date:</label>
+            <input type="date" name="date" value={formData.date} onChange={handleChange} style={styles.input} required />
+          </div>
+
+          <button type="submit" style={styles.button}>Submit</button>
+        </form>
+      </div>
     </div>
   );
 };
@@ -98,12 +82,38 @@ const Salary = () => {
 // Inline CSS styles
 const styles = {
   container: {
-    width: "300px",
-    margin: "20px auto",
+    display: "flex",
+    height: "100vh",
+  },
+  sidebar: {
+    width: "250px",
+    backgroundColor: "#1a202c",
+    padding: "20px",
+    color: "white",
+  },
+  mainContent: {
+    flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "flex-start", // Align content to the top
+    paddingTop: "40px",
+  },
+  title: {
+    fontSize: "24px",
+    marginBottom: "15px",
+  },
+  form: {
+    maxWidth: "400px",
+    width: "100%",
     padding: "20px",
     border: "1px solid #ddd",
     borderRadius: "5px",
     boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
+    backgroundColor: "#f9f9f9",
+    textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
   },
   inputGroup: {
     marginBottom: "10px",
