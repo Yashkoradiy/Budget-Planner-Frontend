@@ -17,7 +17,7 @@ import ExpenseForm from "./Components/layouts/ExpenceForm";
 import PieChart from "./Components/Expence/Piechart";
 import Salary from "./Components/Expence/Salary";
 import { ResetPassword } from "./Components/common/ResetPassword";
-
+import History from "./Components/Expence/History";
 
 
 
@@ -40,12 +40,11 @@ function App() {
 
           <Route path="/budget-form" element={<ExpenseForm />}></Route>
 
-          <Route
-            path="/budget-diagram"
-            element={<PieChart />}
-          ></Route>
+          <Route path="/budget-diagram" element={<PieChart />}></Route>
 
           <Route path="/salary-form" element={<Salary />}></Route>
+
+          <Route path="/history" element={<History />}></Route>
 
           <Route path="/Adminlogin" element={<Login />}></Route>
           <Route path="/Adminsignup" element={<AdminSignup />}></Route>

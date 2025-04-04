@@ -27,7 +27,7 @@ export const Login = () => {
         localStorage.setItem("id", res.data.user._id);
         localStorage.setItem("role", res.data.user.role.name);
 
-        toast.success("✅ Login successful! Redirecting...", {
+        toast.success("✅ Login successful!!", {
           position: "top-center",
           autoClose: 3000,
         });
@@ -94,7 +94,7 @@ export const Login = () => {
     border: "none",
     borderRadius: "5px",
     background: "rgba(255, 255, 255, 0.2)",
-    color: "#fff",
+    color: "black",
     outline: "none",
   };
 
