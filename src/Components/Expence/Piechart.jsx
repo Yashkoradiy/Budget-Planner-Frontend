@@ -1,27 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { UserSidebar } from "../layouts/UserSidebar";
+import axios from "axios";
 
-// Register chart elements
+// Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChart = () => {
-  const data = {
-    labels: ["Food", "Rent", "Entertainment", "Transport", "Shopping"],
-    datasets: [
-      {
-        label: "Expenses",
-        data: [300, 700, 150, 200, 250], // Dummy expense values
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"],
-        hoverOffset: 4,
-      },
-    ],
-  };
+  const [chartData, setChartData] = useState({
+    labels: [],
+    datasets: [],
+  });
+
+  useEffect(() => {
+    // Replace this URL with your actual FastAPI endpoint
+    axios
+      .get("user/budget/")
+      .then((response) => {
+        const { labels, data } = response.data;
+
+        setChartData({
+          labels,
+          datasets: [
+            {
+              label: "Expenses",
+              data,
+              backgroundColor: [
+                "Blue",
+                "Red",
+                "Green",
+                "Yellow",
+                "Purple",
+                "Orange", // Add more if needed
+              ],
+              hoverOffset: 4,
+            },
+          ],
+        });
+      })
+      .catch((error) => {
+        console.error("Error fetching pie chart data:", error);
+      });
+  }, []);
 
   const options = {
     responsive: true,
-    maintainAspectRatio: false, // Allow custom size
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         position: "bottom",
@@ -29,7 +54,6 @@ const PieChart = () => {
     },
   };
 
-  // Inline CSS for layout
   const containerStyle = {
     display: "flex",
     height: "100vh",
@@ -47,8 +71,8 @@ const PieChart = () => {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "flex-start", // Align content to the top
-    paddingTop: "40px", // Adds space at the top
+    justifyContent: "flex-start",
+    paddingTop: "40px",
   };
 
   const chartContainerStyle = {
@@ -65,9 +89,15 @@ const PieChart = () => {
 
       {/* Main Content */}
       <div style={mainContentStyle}>
-        <h2 style={{ fontSize: "24px", marginBottom: "20px" }}>Budget Overview</h2>
+        <h2 style={{ fontSize: "24px", marginBottom: "20px" }}>
+          Budget Overview
+        </h2>
         <div style={chartContainerStyle}>
-          <Pie data={data} options={options} />
+          {chartData.datasets.length > 0 ? (
+            <Pie data={chartData} options={options} />
+          ) : (
+            <p>Loading chart...</p>
+          )}
         </div>
       </div>
     </div>

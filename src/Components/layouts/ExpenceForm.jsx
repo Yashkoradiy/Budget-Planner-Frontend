@@ -63,6 +63,14 @@ const ExpenseForm = () => {
           <label style={styles.label}>Sub-Category:</label>
           <input type="text" {...register("sub_category_id", { required: true })} style={styles.input} />
 
+          <label style={styles.label}>Date:</label>
+          <input
+            type="date"
+            {...register("date", { required: true })}
+            style={styles.input}
+            defaultValue={new Date().toISOString().split("T")[0]}
+          />
+
           <button type="submit" style={styles.button} disabled={loading}>
             {loading ? "Adding..." : "Add Budget"}
           </button>
@@ -89,7 +97,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "flex-start", // Align content to the top
+    justifyContent: "flex-start",
     paddingTop: "40px",
   },
   title: {
