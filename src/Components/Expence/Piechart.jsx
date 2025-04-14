@@ -9,35 +9,54 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChart = () => {
   const [chartData, setChartData] = useState({
-    labels: [],
-    datasets: [],
+    labels: ["Loading..."],
+    datasets: [
+      {
+        label: "Loading",
+        data: [1],
+        backgroundColor: ["gray"],
+      },
+    ],
   });
 
   useEffect(() => {
-    // Replace this URL with your actual FastAPI endpoint
     axios
-      .get("user/budget/")
+      .get("http://localhost:8000/user/budget/") // Update this if needed
       .then((response) => {
-        const { labels, data } = response.data;
+        console.log("API response:", response.data);
 
-        setChartData({
-          labels,
-          datasets: [
-            {
-              label: "Expenses",
-              data,
-              backgroundColor: [
-                "Blue",
-                "Red",
-                "Green",
-                "Yellow",
-                "Purple",
-                "Orange", // Add more if needed
-              ],
-              hoverOffset: 4,
-            },
-          ],
-        });
+        const labels = response.data.labels || [];
+        const data = response.data.data || [];
+
+        console.log("Labels:", labels);
+        console.log("Data:", data);
+
+        if (Array.isArray(labels) && Array.isArray(data) && data.length > 0) {
+          setChartData({
+            labels: labels,
+            datasets: [
+              {
+                label: "Expenses",
+                data: data,
+                backgroundColor: [
+                  "Blue",
+                  "Red",
+                  "Green",
+                  "Yellow",
+                  "Purple",
+                  "Orange",
+                  "#00CED1",
+                  "#ADFF2F",
+                  "#FF69B4",
+                  "#CD5C5C",
+                ],
+                hoverOffset: 4,
+              },
+            ],
+          });
+        } else {
+          console.warn("Invalid data from API.");
+        }
       })
       .catch((error) => {
         console.error("Error fetching pie chart data:", error);
@@ -49,7 +68,7 @@ const PieChart = () => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: "bottom",
+        position: "top",
       },
     },
   };
@@ -93,11 +112,7 @@ const PieChart = () => {
           Budget Overview
         </h2>
         <div style={chartContainerStyle}>
-          {chartData.datasets.length > 0 ? (
-            <Pie data={chartData} options={options} />
-          ) : (
-            <p>Loading chart...</p>
-          )}
+          <Pie data={chartData} options={options} />
         </div>
       </div>
     </div>

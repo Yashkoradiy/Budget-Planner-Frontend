@@ -23,22 +23,22 @@ const History = () => {
 
         // Format expenses
         const formattedExpenses = budgetData.map((expense) => ({
-          id: `exp-${expense.id}`,
+          // id: `exp-${expense.id}`,
           date: expense.date || "N/A",
           category: expense.category_id,
-          type: "Expense",
+          // type: "Expense",
           amount: expense.amount,
           description: expense.description || "N/A",
         }));
 
         // Format salaries
         const formattedSalaries = salaryData.map((salary) => ({
-          id: `sal-${salary.id}`,
+          // id: `sal-${salary.id}`,
           date: salary.date || "N/A",
-          category: "Salary",
-          type: "Income",
+          // category: "Salary",
+          // type: "Income",
           amount: salary.amount,
-          description: salary.source || "Salary Payment",
+          // description: salary.source || "Salary Payment",
         }));
 
         // Combine and sort transactions by date (newest first)
