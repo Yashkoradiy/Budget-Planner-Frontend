@@ -49,7 +49,7 @@ export const UserSidebar = () => {
       {/* Sidebar */}
       <aside style={styles.sidebar}>
         <div style={styles.sidebarBrand}>
-          <Link to="/user" style={{ color: "#fff", textDecoration: "none" }}>
+          <Link to="/dashboard" style={{ color: "#fff", textDecoration: "none" }}>
             User Dashboard
           </Link>
         </div>

@@ -26,7 +26,7 @@ const History = () => {
           // id: `exp-${expense.id}`,
           date: expense.date || "N/A",
           category: expense.category_id,
-          // type: "Expense",
+           type: "Expense",
           amount: expense.amount,
           description: expense.description || "N/A",
         }));
@@ -36,7 +36,7 @@ const History = () => {
           // id: `sal-${salary.id}`,
           date: salary.date || "N/A",
           // category: "Salary",
-          // type: "Income",
+           type: "Income",
           amount: salary.amount,
           // description: salary.source || "Salary Payment",
         }));
@@ -90,9 +90,9 @@ const History = () => {
               {historyData.map((entry) => (
                 <tr key={entry.id} style={entry.type === "Income" ? styles.incomeRow : styles.expenseRow}>
                   <td style={styles.td}>{entry.date}</td>
-                  <td style={styles.td}>{entry.category}</td>
+                  <td style={styles.td}>{entry.category }</td>
                   <td style={styles.td}>{entry.type}</td>
-                  <td style={styles.td}>${entry.amount.toFixed(2)}</td>
+                  <td style={styles.td}>₹{entry.amount.toFixed(2)}</td>
                   <td style={styles.td}>{entry.description}</td>
                 </tr>
               ))}
