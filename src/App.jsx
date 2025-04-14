@@ -36,7 +36,7 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
           <Route path="/resetpassword/:token" element={<ResetPassword/>}></Route>
-          <Route path="/user" element={<UserSidebar />}></Route>
+          <Route path="/dashboard" element={<UserSidebar />}></Route>
 
           <Route path="/budget-form" element={<ExpenseForm />}></Route>
 

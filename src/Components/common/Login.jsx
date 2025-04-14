@@ -34,7 +34,7 @@ export const Login = () => {
 
         setTimeout(() => {
           if (res.data.user.role.name === "User") {
-            navigate("/user");
+            navigate("/dashboard");
           } else if (res.data.user.role.name === "Admin") {
             navigate("/admin");
           }

@@ -21,7 +21,7 @@ const PieChart = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/user/budget/") // Update this if needed
+      .get("http://localhost:8000/user/budget") // Update this if needed
       .then((response) => {
         console.log("API response:", response.data);
 
