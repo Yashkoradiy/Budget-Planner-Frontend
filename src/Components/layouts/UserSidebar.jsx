@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Daseboard from "../Expence/Daseboard";
 
 export const UserSidebar = () => {
   const styles = {
@@ -98,10 +99,31 @@ export const UserSidebar = () => {
             </li>
           </ul>
         </nav>
+
+        {/* Logout Button at Bottom */}
+        <div style={{ marginTop: "auto", padding: "20px" }}>
+          <Link
+            to="/" // Replace this route with your actual logout logic if needed
+            style={{
+              ...styles.navItem,
+              backgroundColor: "#374151",
+              color: "#ffffff",
+              borderRadius: "4px",
+              textAlign: "center",
+              justifyContent: "center",
+            }}
+            onMouseEnter={(e) => Object.assign(e.target.style, styles.navItemHover)}
+            onMouseLeave={(e) => Object.assign(e.target.style, styles.navItem)}
+          >
+            <i className="bi bi-box-arrow-right me-2"></i> Logout
+          </Link>
+        </div>
       </aside>
 
-      {/* Main Content */}
-      <main style={styles.mainContent}></main>
+      {/* Main Content with Dashboard */}
+      <main style={styles.mainContent}>
+        {/* Add your main content or routing outlet here */}
+      </main>
     </div>
   );
 };

@@ -21,48 +21,47 @@ const PieChart = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/user/budget") // Update this if needed
+      .get("http://localhost:8000/user/budget")
       .then((response) => {
-        console.log("API response:", response.data);
-
-        const labels = response.data.labels || [];
-        const data = response.data.data || [];
-
-        console.log("Labels:", labels);
-        console.log("Data:", data);
-
-        if (Array.isArray(labels) && Array.isArray(data) && data.length > 0) {
-          setChartData({
-            labels: labels,
-            datasets: [
-              {
-                label: "Expenses",
-                data: data,
-                backgroundColor: [
-                  "Blue",
-                  "Red",
-                  "Green",
-                  "Yellow",
-                  "Purple",
-                  "Orange",
-                  "#00CED1",
-                  "#ADFF2F",
-                  "#FF69B4",
-                  "#CD5C5C",
-                ],
-                hoverOffset: 4,
-              },
-            ],
-          });
-        } else {
-          console.warn("Invalid data from API.");
-        }
+        const expenses = response.data;
+  
+        // Group by category and sum
+        const categoryTotals = {};
+        expenses.forEach((item) => {
+          const category = item.category_id || "Uncategorized";
+          if (!categoryTotals[category]) {
+            categoryTotals[category] = 0;
+          }
+          categoryTotals[category] += item.amount;
+        });
+  
+        const labels = Object.keys(categoryTotals);
+        const data = Object.values(categoryTotals);
+  
+        setChartData({
+          labels: labels,
+          datasets: [
+            {
+              label: "Category-wise Expenses",
+              data: data,
+              backgroundColor: [
+                "rgba(75, 192, 192, 0.6)",
+                "rgba(255, 99, 132, 0.6)",
+                "rgba(54, 162, 235, 0.6)",
+                "rgba(255, 206, 86, 0.6)",
+                "rgba(153, 102, 255, 0.6)",
+                "rgba(255, 159, 64, 0.6)",
+              ],
+              hoverOffset: 4,
+            },
+          ],
+        });
       })
       .catch((error) => {
         console.error("Error fetching pie chart data:", error);
       });
   }, []);
-
+  
   const options = {
     responsive: true,
     maintainAspectRatio: false,

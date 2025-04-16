@@ -18,10 +18,11 @@ import PieChart from "./Components/Expence/Piechart";
 import Salary from "./Components/Expence/Salary";
 import { ResetPassword } from "./Components/common/ResetPassword";
 import History from "./Components/Expence/History";
-
-
-
+import Daseboard from "./Components/Expence/Daseboard";
+import PrivateRoute from "./Components/common/PrivateRoute";
 import axios from "axios";
+
+
 
 
 function App() {
@@ -36,15 +37,21 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<Signup />}></Route>
           <Route path="/resetpassword/:token" element={<ResetPassword/>}></Route>
-          <Route path="/dashboard" element={<UserSidebar />}></Route>
 
+          
+          
+       <Route element={<PrivateRoute />}>    
+          <Route path="/dashboard" element={<Daseboard />}></Route>
           <Route path="/budget-form" element={<ExpenseForm />}></Route>
-
           <Route path="/budget-diagram" element={<PieChart />}></Route>
-
           <Route path="/salary-form" element={<Salary />}></Route>
-
           <Route path="/history" element={<History />}></Route>
+        </Route>
+
+        
+
+          
+          
 
           <Route path="/Adminlogin" element={<Login />}></Route>
           <Route path="/Adminsignup" element={<AdminSignup />}></Route>
