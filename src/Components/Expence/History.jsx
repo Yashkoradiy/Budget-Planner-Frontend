@@ -4,6 +4,8 @@ import { UserSidebar } from "/src/Components/layouts/UserSidebar";
 
 const History = () => {
   const [historyData, setHistoryData] = useState([]);
+  const [totalExpense, setTotalExpense] = useState(0);
+  const [totalIncome, setTotalIncome] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -23,22 +25,19 @@ const History = () => {
 
         // Format expenses
         const formattedExpenses = budgetData.map((expense) => ({
-          // id: `exp-${expense.id}`,
           date: expense.date || "N/A",
           category: expense.category_id,
-           type: "Expense",
+          type: "Expense",
           amount: expense.amount,
           description: expense.description || "N/A",
         }));
 
         // Format salaries
         const formattedSalaries = salaryData.map((salary) => ({
-          // id: `sal-${salary.id}`,
           date: salary.date || "N/A",
-          // category: "Salary",
-           type: "Income",
+          type: "Income",
           amount: salary.amount,
-          // description: salary.source || "Salary Payment",
+          description: salary.source || "Salary",
         }));
 
         // Combine and sort transactions by date (newest first)
@@ -46,6 +45,12 @@ const History = () => {
           (a, b) => new Date(b.date) - new Date(a.date)
         );
 
+        // Calculate totals
+        const expenseTotal = formattedExpenses.reduce((sum, e) => sum + e.amount, 0);
+        const incomeTotal = formattedSalaries.reduce((sum, i) => sum + i.amount, 0);
+
+        setTotalExpense(expenseTotal);
+        setTotalIncome(incomeTotal);
         setHistoryData(combinedHistory);
       } catch (error) {
         setError("Failed to fetch transaction history");
@@ -69,6 +74,40 @@ const History = () => {
       <div style={styles.mainContent}>
         <h2 style={styles.heading}>Transaction History</h2>
 
+        {/* Cards */}
+        <div style={{ display: "flex", gap: "20px", marginBottom: "20px" }}>
+          <div
+            style={{
+              padding: "20px",
+              borderRadius: "12px",
+              boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
+              minWidth: "180px",
+              textAlign: "center",
+              backgroundColor: "#fee2e2",
+            }}
+          >
+            <h4 style={{ fontSize: "16px", fontWeight: "bold", marginBottom: "10px" }}>Total Expense</h4>
+            <p style={{ fontSize: "20px", fontWeight: "600" }}>₹{totalExpense.toFixed(2)}</p>
+          </div>
+
+          <div
+            style={{
+              padding: "20px",
+              borderRadius: "12px",
+              boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
+              minWidth: "180px",
+              textAlign: "center",
+              backgroundColor: "#d1fae5",
+            }}
+          >
+            <h4 style={{ fontSize: "16px", fontWeight: "bold", marginBottom: "10px" }}>Remaining Balance</h4>
+            <p style={{ fontSize: "20px", fontWeight: "600" }}>
+              ₹{(totalIncome - totalExpense).toFixed(2)}
+            </p>
+          </div>
+        </div>
+
+        {/* Table */}
         {loading ? (
           <p style={styles.loading}>Loading history...</p>
         ) : error ? (
@@ -87,10 +126,13 @@ const History = () => {
               </tr>
             </thead>
             <tbody>
-              {historyData.map((entry) => (
-                <tr key={entry.id} style={entry.type === "Income" ? styles.incomeRow : styles.expenseRow}>
+              {historyData.map((entry, index) => (
+                <tr
+                  key={index}
+                  style={entry.type === "Income" ? styles.incomeRow : styles.expenseRow}
+                >
                   <td style={styles.td}>{entry.date}</td>
-                  <td style={styles.td}>{entry.category }</td>
+                  <td style={styles.td}>{entry.category || "-"}</td>
                   <td style={styles.td}>{entry.type}</td>
                   <td style={styles.td}>₹{entry.amount.toFixed(2)}</td>
                   <td style={styles.td}>{entry.description}</td>

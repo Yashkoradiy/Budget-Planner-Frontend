@@ -19,25 +19,30 @@ const PieChart = () => {
     ],
   });
 
+  const [totalExpense, setTotalExpense] = useState(0);
+
   useEffect(() => {
     axios
       .get("http://localhost:8000/user/budget")
       .then((response) => {
         const expenses = response.data;
-  
+
         // Group by category and sum
         const categoryTotals = {};
+        let total = 0;
+
         expenses.forEach((item) => {
           const category = item.category_id || "Uncategorized";
           if (!categoryTotals[category]) {
             categoryTotals[category] = 0;
           }
           categoryTotals[category] += item.amount;
+          total += item.amount;
         });
-  
+
         const labels = Object.keys(categoryTotals);
         const data = Object.values(categoryTotals);
-  
+
         setChartData({
           labels: labels,
           datasets: [
@@ -56,12 +61,14 @@ const PieChart = () => {
             },
           ],
         });
+
+        setTotalExpense(total);
       })
       .catch((error) => {
         console.error("Error fetching pie chart data:", error);
       });
   }, []);
-  
+
   const options = {
     responsive: true,
     maintainAspectRatio: false,
@@ -96,6 +103,29 @@ const PieChart = () => {
   const chartContainerStyle = {
     width: "350px",
     height: "350px",
+    marginBottom: "30px",
+  };
+
+  const cardStyle = {
+    backgroundColor: "#f0f4f8",
+    borderRadius: "12px",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+    padding: "20px",
+    textAlign: "center",
+    width: "300px",
+    marginBottom: "20px",
+  };
+
+  const cardTitleStyle = {
+    marginBottom: "10px",
+    fontSize: "18px",
+    fontWeight: "bold",
+  };
+
+  const cardAmountStyle = {
+    fontSize: "24px",
+    fontWeight: "bold",
+    color: "#333",
   };
 
   return (
@@ -110,6 +140,14 @@ const PieChart = () => {
         <h2 style={{ fontSize: "24px", marginBottom: "20px" }}>
           Budget Overview
         </h2>
+
+        {/* Total Expense Card */}
+        <div style={cardStyle}>
+          <div style={cardTitleStyle}>Total Expense</div>
+          <div style={cardAmountStyle}>₹{totalExpense.toLocaleString()}</div>
+        </div>
+
+        {/* Pie Chart */}
         <div style={chartContainerStyle}>
           <Pie data={chartData} options={options} />
         </div>
