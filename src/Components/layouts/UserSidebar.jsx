@@ -51,7 +51,7 @@ export const UserSidebar = () => {
       <aside style={styles.sidebar}>
         <div style={styles.sidebarBrand}>
           <Link to="/dashboard" style={{ color: "#fff", textDecoration: "none" }}>
-            User Dashboard
+            Dashboard
           </Link>
         </div>
 
@@ -97,13 +97,23 @@ export const UserSidebar = () => {
                 <i className="bi bi-clock-history me-2"></i> History
               </Link>
             </li>
+            <li>
+              <Link
+                to="/profile"
+                style={styles.navItem}
+                onMouseEnter={(e) => Object.assign(e.target.style, styles.navItemHover)}
+                onMouseLeave={(e) => Object.assign(e.target.style, styles.navItem)}
+              >
+                <i className="bi bi-person-circle me-2"></i> Profile
+              </Link>
+            </li>
           </ul>
         </nav>
 
         {/* Logout Button at Bottom */}
         <div style={{ marginTop: "auto", padding: "20px" }}>
           <Link
-            to="/" // Replace this route with your actual logout logic if needed
+            to="/" // Update with logout logic if needed
             style={{
               ...styles.navItem,
               backgroundColor: "#374151",
@@ -120,9 +130,10 @@ export const UserSidebar = () => {
         </div>
       </aside>
 
-      {/* Main Content with Dashboard */}
+      {/* Main Content */}
       <main style={styles.mainContent}>
-        {/* Add your main content or routing outlet here */}
+        {/* You can include your content here */}
+        {/* <Daseboard /> or <Outlet /> if you're using nested routing */}
       </main>
     </div>
   );

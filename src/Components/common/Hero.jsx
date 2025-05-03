@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const HeroPage = () => {
-  // Inline CSS styles
+const Hero = () => {
   const styles = {
     body: {
       fontFamily: "sans-serif",
@@ -34,26 +33,8 @@ const HeroPage = () => {
       textDecoration: "none",
       color: "#333",
     },
-    searchBar: {
-      display: "flex",
-      alignItems: "center",
-    },
-    searchInput: {
-      padding: "8px 12px",
-      border: "1px solid #ccc",
-      borderRadius: "4px",
-    },
-    searchButton: {
-      backgroundColor: "#007bff",
-      color: "white",
-      border: "none",
-      padding: "8px 12px",
-      borderRadius: "4px",
-      marginLeft: "5px",
-      cursor: "pointer",
-    },
     hero: {
-      backgroundImage: "url('src/Image/hero-image.jpg')", // Replace with your image
+      backgroundImage: "url('src/Image/hero-image.jpg')",
       backgroundSize: "cover",
       backgroundPosition: "center",
       color: "white",
@@ -91,6 +72,60 @@ const HeroPage = () => {
       cursor: "pointer",
       textDecoration: "none",
     },
+    featuresSection: {
+      padding: "60px 20px",
+      display: "flex",
+      justifyContent: "center",
+      gap: "40px",
+      flexWrap: "wrap",
+      backgroundColor: "#fff",
+    },
+    featureCard: {
+      width: "300px",
+      backgroundColor: "#f9f9f9",
+      borderRadius: "10px",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+      padding: "20px",
+      textAlign: "center",
+    },
+    featureImage: {
+      width: "100%",
+      height: "180px",
+      objectFit: "cover",
+      borderRadius: "8px",
+      marginBottom: "15px",
+    },
+    featureTitle: {
+      fontSize: "1.3em",
+      fontWeight: "bold",
+      marginBottom: "10px",
+    },
+    featureText: {
+      fontSize: "1em",
+      color: "#555",
+    },
+    footer: {
+      backgroundColor: "#222",
+      color: "#fff",
+      padding: "40px 20px",
+      textAlign: "center",
+    },
+    footerLinks: {
+      display: "flex",
+      justifyContent: "center",
+      gap: "30px",
+      flexWrap: "wrap",
+      marginBottom: "20px",
+    },
+    footerLink: {
+      color: "#fff",
+      textDecoration: "none",
+      fontSize: "1em",
+    },
+    copyright: {
+      fontSize: "0.9em",
+      color: "#bbb",
+    },
   };
 
   return (
@@ -99,26 +134,18 @@ const HeroPage = () => {
       <header style={styles.header}>
         <div style={styles.logo}>▲ BudgetWise</div>
         <nav>
-  <ul style={styles.nav}>
-    <li style={styles.navItem}>
-      <Link to="/login" style={styles.navLink}>
-        Login
-      </Link>
-    </li>
-    <li style={styles.navItem}>
-      <Link to="/signup" style={styles.navLink}>
-        Sign Up
-      </Link>
-    </li>
-    <li style={styles.navItem}>
-      <Link to="/help" style={styles.navLink}>
-        Help
-      </Link>
-    </li>
-  </ul>
-</nav>
-
-       
+          <ul style={styles.nav}>
+            <li style={styles.navItem}>
+              <Link to="/login" style={styles.navLink}>Login</Link>
+            </li>
+            <li style={styles.navItem}>
+              <Link to="/signup" style={styles.navLink}>Sign Up</Link>
+            </li>
+            <li style={styles.navItem}>
+              <Link to="/help" style={styles.navLink}>Help</Link>
+            </li>
+          </ul>
+        </nav>
       </header>
 
       {/* Hero Section */}
@@ -127,13 +154,52 @@ const HeroPage = () => {
         <div style={styles.heroContent}>
           <h1 style={styles.heroTitle}>Take Charge of Your Finances</h1>
           <p style={styles.heroText}>Effortlessly manage your budget and achieve your financial goals.</p>
-          <Link to="/signup" style={styles.heroButton}>
-            Sign Up
-          </Link>
+          <Link to="/signup" style={styles.heroButton}>Sign Up</Link>
         </div>
       </section>
+
+      {/* Features Section */}
+      <section style={styles.featuresSection}>
+        <div style={styles.featureCard}>
+          <img src="https://cdn-icons-png.flaticon.com/512/1904/1904425.png" alt="Track Budget" style={styles.featureImage} />
+          <div style={styles.featureTitle}>Track Your Budget</div>
+          <div style={styles.featureText}>
+            Record income & expenses with categories. <br />
+            
+          </div>
+        </div>
+        <div style={styles.featureCard}>
+          <img src="https://cdn-icons-png.flaticon.com/512/4228/4228709.png" alt="Analytics" style={styles.featureImage} />
+          <div style={styles.featureTitle}>Visualize Analytics</div>
+          <div style={styles.featureText}>
+            Get monthly spending charts and stats. <br />
+            
+          </div>
+        </div>
+        <div style={styles.featureCard}>
+          <img src="https://cdn-icons-png.flaticon.com/512/9068/9068776.png" alt="Set Goals" style={styles.featureImage} />
+          <div style={styles.featureTitle}>Set Financial Goals</div>
+          <div style={styles.featureText}>
+            Create savings goals to stay motivated. <br />
+            
+          </div>
+        </div>
+      </section>
+
+      {/* Footer Section */}
+      <footer style={styles.footer}>
+        <div style={styles.footerLinks}>
+          <Link to="/about" style={styles.footerLink}>About</Link>
+          <Link to="/contact" style={styles.footerLink}>Contact</Link>
+          <Link to="/terms" style={styles.footerLink}>Terms of Service</Link>
+          <Link to="/privacy" style={styles.footerLink}>Privacy Policy</Link>
+        </div>
+        <p style={styles.copyright}>
+          &copy; {new Date().getFullYear()} BudgetWise. All rights reserved.
+        </p>
+      </footer>
     </div>
   );
 };
 
-export default HeroPage;
+export default Hero;

@@ -16,7 +16,7 @@ const History = () => {
         setError(null);
 
         // Fetch expenses from Budget API
-        const budgetResponse = await axios.get("user/budget/");
+        const budgetResponse = await axios.get("/user/budget/");
         const budgetData = budgetResponse.data;
 
         // Fetch salaries from Salary API
