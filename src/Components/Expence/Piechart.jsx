@@ -1,11 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { Pie } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie, Bar } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+} from "chart.js";
 import { UserSidebar } from "../layouts/UserSidebar";
 import axios from "axios";
 
 // Register Chart.js components
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement
+);
 
 const PieChart = () => {
   const [chartData, setChartData] = useState({
@@ -19,7 +34,19 @@ const PieChart = () => {
     ],
   });
 
+  const [barChartData, setBarChartData] = useState({
+    labels: ["Loading..."],
+    datasets: [
+      {
+        label: "Loading",
+        data: [1],
+        backgroundColor: "rgba(75, 192, 192, 0.6)",
+      },
+    ],
+  });
+
   const [totalExpense, setTotalExpense] = useState(0);
+  const [chartType, setChartType] = useState("pie"); // pie or bar
 
   useEffect(() => {
     axios
@@ -27,7 +54,6 @@ const PieChart = () => {
       .then((response) => {
         const expenses = response.data;
 
-        // Group by category and sum
         const categoryTotals = {};
         let total = 0;
 
@@ -43,21 +69,34 @@ const PieChart = () => {
         const labels = Object.keys(categoryTotals);
         const data = Object.values(categoryTotals);
 
+        const colors = [
+          "rgba(75, 192, 192, 0.6)",
+          "rgba(255, 99, 132, 0.6)",
+          "rgba(54, 162, 235, 0.6)",
+          "rgba(255, 206, 86, 0.6)",
+          "rgba(153, 102, 255, 0.6)",
+          "rgba(255, 159, 64, 0.6)",
+        ];
+
         setChartData({
-          labels: labels,
+          labels,
           datasets: [
             {
               label: "Category-wise Expenses",
-              data: data,
-              backgroundColor: [
-                "rgba(75, 192, 192, 0.6)",
-                "rgba(255, 99, 132, 0.6)",
-                "rgba(54, 162, 235, 0.6)",
-                "rgba(255, 206, 86, 0.6)",
-                "rgba(153, 102, 255, 0.6)",
-                "rgba(255, 159, 64, 0.6)",
-              ],
+              data,
+              backgroundColor: colors,
               hoverOffset: 4,
+            },
+          ],
+        });
+
+        setBarChartData({
+          labels,
+          datasets: [
+            {
+              label: "Category-wise Expenses",
+              data,
+              backgroundColor: "rgba(54, 162, 235, 0.6)",
             },
           ],
         });
@@ -65,11 +104,11 @@ const PieChart = () => {
         setTotalExpense(total);
       })
       .catch((error) => {
-        console.error("Error fetching pie chart data:", error);
+        console.error("Error fetching chart data:", error);
       });
   }, []);
 
-  const options = {
+  const pieOptions = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
@@ -79,6 +118,17 @@ const PieChart = () => {
     },
   };
 
+  const barOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+    },
+  };
+
+  // Styles
   const containerStyle = {
     display: "flex",
     height: "100vh",
@@ -113,7 +163,7 @@ const PieChart = () => {
     padding: "20px",
     textAlign: "center",
     width: "300px",
-    marginBottom: "20px",
+    marginBottom: "30px",
   };
 
   const cardTitleStyle = {
@@ -127,6 +177,22 @@ const PieChart = () => {
     fontWeight: "bold",
     color: "#333",
   };
+
+  const buttonContainerStyle = {
+    display: "flex",
+    gap: "10px",
+    marginBottom: "20px",
+  };
+
+  const buttonStyle = (active) => ({
+    padding: "10px 20px",
+    backgroundColor: active ? "#2b6cb0" : "#a0aec0",
+    color: "white",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer",
+    fontSize: "16px",
+  });
 
   return (
     <div style={containerStyle}>
@@ -147,9 +213,29 @@ const PieChart = () => {
           <div style={cardAmountStyle}>₹{totalExpense.toLocaleString()}</div>
         </div>
 
-        {/* Pie Chart */}
+        {/* Toggle Buttons */}
+        <div style={buttonContainerStyle}>
+          <button
+            style={buttonStyle(chartType === "pie")}
+            onClick={() => setChartType("pie")}
+          >
+            Pie Chart
+          </button>
+          <button
+            style={buttonStyle(chartType === "bar")}
+            onClick={() => setChartType("bar")}
+          >
+            Bar Chart
+          </button>
+        </div>
+
+        {/* Chart */}
         <div style={chartContainerStyle}>
-          <Pie data={chartData} options={options} />
+          {chartType === "pie" ? (
+            <Pie data={chartData} options={pieOptions} />
+          ) : (
+            <Bar data={barChartData} options={barOptions} />
+          )}
         </div>
       </div>
     </div>

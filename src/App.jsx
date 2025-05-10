@@ -20,7 +20,7 @@ import { ResetPassword } from "./Components/common/ResetPassword";
 import History from "./Components/Expence/History";
 import Daseboard from "./Components/Expence/Daseboard";
 import PrivateRoute from "./Components/common/PrivateRoute";
-import ProfilePage from "./Components/common/Profilepage";
+
 import axios from "axios";
 
 
@@ -47,7 +47,7 @@ function App() {
           <Route path="/budget-diagram" element={<PieChart />}></Route>
           <Route path="/salary-form" element={<Salary />}></Route>
           <Route path="/history" element={<History />}></Route>
-          <Route path="/profile" element={<ProfilePage />}></Route>
+          
         </Route>
 
         

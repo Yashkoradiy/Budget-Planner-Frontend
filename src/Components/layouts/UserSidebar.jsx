@@ -97,16 +97,7 @@ export const UserSidebar = () => {
                 <i className="bi bi-clock-history me-2"></i> History
               </Link>
             </li>
-            <li>
-              <Link
-                to="/profile"
-                style={styles.navItem}
-                onMouseEnter={(e) => Object.assign(e.target.style, styles.navItemHover)}
-                onMouseLeave={(e) => Object.assign(e.target.style, styles.navItem)}
-              >
-                <i className="bi bi-person-circle me-2"></i> Profile
-              </Link>
-            </li>
+            
           </ul>
         </nav>
 
