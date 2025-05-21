@@ -141,9 +141,7 @@ const Hero = () => {
             <li style={styles.navItem}>
               <Link to="/signup" style={styles.navLink}>Sign Up</Link>
             </li>
-            <li style={styles.navItem}>
-              <Link to="/help" style={styles.navLink}>Help</Link>
-            </li>
+            
           </ul>
         </nav>
       </header>
